@@ -5,8 +5,6 @@ namespace TextWrapper
 {
     class Program
     {
-        private static string buildStr {get; set; } = string.Empty;
-
         public static void Main (string[] args) {
             WrapFileContent();
         }
