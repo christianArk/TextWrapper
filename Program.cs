@@ -66,7 +66,10 @@ namespace TextWrapper
                 if (input.Length <= 0)
                 {
                     // using StreamWriter to write output to file
-                    string[] paths = {System.IO.Directory.GetCurrentDirectory(), "outputdir", GetCurrentTimestamp() + ".txt"};
+                    var outputpath = $"{Directory.GetCurrentDirectory()}/outputdir";
+                    // Try to create directory
+                    Directory.CreateDirectory(outputpath);
+                    string[] paths = {Directory.GetCurrentDirectory(), "outputdir", GetCurrentTimestamp() + ".txt"};
                     string fullPath = Path.Combine(paths);
                     using (StreamWriter writer = new StreamWriter(fullPath))
                     {
