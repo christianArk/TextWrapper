@@ -58,8 +58,8 @@ namespace TextWrapper
             try
             {
                 // loop through input
-                // add line break when counter equals lenPerLine
-                // reset counter
+                // add line break when counter equals lenPerLine - reset counter
+                // else increment counter
                 var buildStr = "";
                 var counter = 1;
                 for (int i = 0; i < input.Length; i++)
