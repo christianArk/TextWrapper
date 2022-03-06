@@ -59,33 +59,39 @@ namespace TextWrapper
         {
             try
             {
-                if (lenPerLine > input.Length)
+                // loop through input
+                // add line break when counter equals lenPerLine
+                // reset counter
+                var buildStr = "";
+                var counter = 1;
+                for (int i = 0; i < input.Length; i++)
                 {
-                    lenPerLine = input.Length;
-                }
-                if (input.Length <= 0)
-                {
-                    // using StreamWriter to write output to file
-                    var outputpath = $"{Directory.GetCurrentDirectory()}/outputdir";
-                    // Try to create directory
-                    Directory.CreateDirectory(outputpath);
-                    string[] paths = {Directory.GetCurrentDirectory(), "outputdir", GetCurrentTimestamp() + ".txt"};
-                    string fullPath = Path.Combine(paths);
-                    using (StreamWriter writer = new StreamWriter(fullPath))
+                    if (counter == lenPerLine)
                     {
-                        writer.WriteLine(buildStr);
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write("Done! Successfully wrapped file contents. ");
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine(fullPath);
-                        Console.ResetColor();
+                        buildStr += input[i] + "\n";
+                        counter = 1;
+                    } else {
+                        buildStr += input[i];
+                        counter++;
                     }
-                    return;
                 }
-                buildStr += input.Substring(0, lenPerLine) + "\n";
-                string remainingStr = input.Substring(lenPerLine, input.Length - lenPerLine);
 
-                WrapText(remainingStr, lenPerLine);
+                // using StreamWriter to write output to file
+                var outputpath = $"{Directory.GetCurrentDirectory()}/outputdir";
+                // Try to create directory
+                Directory.CreateDirectory(outputpath);
+                string[] paths = {Directory.GetCurrentDirectory(), "outputdir", GetCurrentTimestamp() + ".txt"};
+                string fullPath = Path.Combine(paths);
+                using (StreamWriter writer = new StreamWriter(fullPath))
+                {
+                    // write buildStr to file
+                    writer.WriteLine(buildStr);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("Done! Successfully wrapped file contents. ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(fullPath);
+                    Console.ResetColor();
+                }
             }
             catch (Exception ex)
             {
